@@ -4,4 +4,4 @@ OERClient internally uses the native HTTPUrlConnection HTTP client and depends o
 
 OERClient is Apache licensed and used in production for Android applications that use the openexchangerates.org service.
 
-See http://openexchangerates.org/ for more information.
+See http://kgilmer.github.com/org.openexchangerate.client/ for library javadoc and http://openexchangerates.org/ for more information on the web service.
