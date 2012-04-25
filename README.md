@@ -3,14 +3,14 @@ OERClient is an openexchangerates.org client for Java and Android.  It handles H
 
 # Example
 Print the all the latest rates and currencies
-````
+``` java
 	OERClient oerClient = new OERClient();
 	Map<String, Double> rates = oerClient.getLatestRates();
 	
 	for (Map.Entry<String, Double> entry : rates) {
 		System.out.println("Currency: " + entry.getKey() + " Value: " + entry.getValue());
 	}
-````
+```
 
 # Dependencies
 OERClient internally uses the native HTTPUrlConnection HTTP client and depends on the org.json JSON library (which is bundled with the Android class libraries).
