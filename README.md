@@ -1,5 +1,5 @@
 # Overview
-OERClient is an openexchangerates.org client for Java and Android.  It handles HTTP connection and JSON deserialization into native types.  All OER services are exposed via the OERClient class.
+OERClient is an openexchangerates.org client for Java and Android.  It handles HTTP connection and JSON deserialization into native types.  All OER services are exposed via the [OERClient](http://kgilmer.github.com/org.openexchangerate.client/org/openexchangerates/client/OERClient.html) class.
 
 # Example
 Print the all the latest rates and currencies
