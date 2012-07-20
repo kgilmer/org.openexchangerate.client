@@ -36,7 +36,15 @@ public final class OERClient {
 	/**
 	 * Default URL for OER service.
 	 */
-	public static final String DEFAULT_OER_URL = "https://raw.github.com/currencybot/open-exchange-rates/master";
+	//	public static final String DEFAULT_OER_URL = "https://raw.github.com/currencybot/open-exchange-rates/master";
+	
+	public static final String DEFAULT_OER_URL = "http://openexchangerates.org";
+	
+	/**
+	 * This API_KEY value is used only if the non-api specifying constructor is used.
+	 */
+	public static final String DEFAULT_API_KEY = "CHANGE_ME_TO_YOUR_API_KEY";
+	
 	/**
 	 * Default HTTP connection timeout.
 	 */
@@ -50,7 +58,6 @@ public final class OERClient {
 	private final URLBuilder baseURL;
 	private final URLBuilder currenciesURL;
 	private final URLBuilder latestURL;
-	
 	
 	/**
 	 * {@link OERClient} constructor with default HTTP client and no caching or debugging.  Throw any errors back to the caller.
@@ -66,7 +73,7 @@ public final class OERClient {
 	public OERClient(HttpGETCache cache) {
 		this(cache, DEFAULT_OER_URL, DEFAULT_CONNECT_TIMEOUT, DEFAULT_READ_TIMEOUT, null, RestClient.THROW_ALL_ERRORS);
 	}
-	
+		
 	/**
 	 * {@link OERClient} constructor with all configuration capabilities exposed to the client.
 	 * 
@@ -76,10 +83,11 @@ public final class OERClient {
 	 * @param readTimeout stream read timeout
 	 * @param debugWriter PrintWriter to send request/response messages to.  If null no debug output will be generated.
 	 * @param errorHandler Determine how connection and deserialization errors are handled.
+	 * @param apiKey API_KEY provisioned at openexchangerates.org
 	 */
-	public OERClient(HttpGETCache cache, String oerUrl, int connectTimeout, int readTimeout, PrintWriter debugWriter, ErrorHandler errorHandler) {
+	public OERClient(HttpGETCache cache, String oerUrl, int connectTimeout, int readTimeout, PrintWriter debugWriter, ErrorHandler errorHandler, String apiKey) {
 		this.restClient = new RestClient();
-		this.baseURL = restClient.buildURL(oerUrl);
+		this.baseURL = restClient.buildURL(oerUrl).addParameter("API_KEY", apiKey);
 		this.currenciesURL = baseURL.copy("currencies.json");
 		this.latestURL = baseURL.copy("latest.json");
 		this.restClient.setCache(cache);
@@ -93,6 +101,18 @@ public final class OERClient {
 		
 		// By default throw all errors (Connection, Parsing) back to caller.
 		restClient.setErrorHandler(errorHandler);
+	}
+	
+	/**
+	 * @param cache
+	 * @param oerUrl
+	 * @param connectTimeout
+	 * @param readTimeout
+	 * @param debugWriter
+	 * @param errorHandler
+	 */
+	public OERClient(HttpGETCache cache, String oerUrl, int connectTimeout, int readTimeout, PrintWriter debugWriter, ErrorHandler errorHandler) {
+		this(cache, oerUrl, connectTimeout, readTimeout, debugWriter, errorHandler, DEFAULT_API_KEY);
 	}
 
 	/**
