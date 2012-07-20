@@ -36,8 +36,6 @@ public final class OERClient {
 	/**
 	 * Default URL for OER service.
 	 */
-	//	public static final String DEFAULT_OER_URL = "https://raw.github.com/currencybot/open-exchange-rates/master";
-	
 	public static final String DEFAULT_OER_URL = "http://openexchangerates.org";
 	
 	/**
