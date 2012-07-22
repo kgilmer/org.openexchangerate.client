@@ -1567,10 +1567,12 @@ public class RestClient {
 		/**
 		 * @param segments list of in-order segments that are used to build the url.
 		 * @param httpsScheme true if HTTPS should be used, false otherwise.
+		 * @param parameters Params of url
 		 */
-		private URLBuilderImpl(List<String> segments, boolean httpsScheme) {
+		private URLBuilderImpl(List<String> segments, boolean httpsScheme, List<Map.Entry<String, String>> parameters) {
 			this.segments = segments;
 			this.httpsScheme = httpsScheme;
+			this.parameters = parameters;
 		}
 		
 		@Override
@@ -1676,7 +1678,7 @@ public class RestClient {
 		
 		@Override
 		protected Object clone() throws CloneNotSupportedException {			
-			return new URLBuilderImpl(new ArrayList<String>(segments), httpsScheme);
+			return new URLBuilderImpl(new ArrayList<String>(segments), httpsScheme, parameters);
 		}
 
 		@Override

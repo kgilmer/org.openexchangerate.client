@@ -53,9 +53,10 @@ public final class OERClient {
 	public static final int DEFAULT_READ_TIMEOUT = 10000;
 	
 	private final RestClient restClient;
-	private final URLBuilder baseURL;
-	private final URLBuilder currenciesURL;
-	private final URLBuilder latestURL;
+	private URLBuilder baseURL;
+	private URLBuilder currenciesURL;
+	private URLBuilder latestURL;
+	private final String baseURLString;
 	
 	/**
 	 * {@link OERClient} constructor with default HTTP client and no caching or debugging.  Throw any errors back to the caller.
@@ -85,6 +86,7 @@ public final class OERClient {
 	 */
 	public OERClient(HttpGETCache cache, String oerUrl, int connectTimeout, int readTimeout, PrintWriter debugWriter, ErrorHandler errorHandler, String apiKey) {
 		this.restClient = new RestClient();
+		this.baseURLString = oerUrl;
 		this.baseURL = restClient.buildURL(oerUrl).addParameter("API_KEY", apiKey);
 		this.currenciesURL = baseURL.copy("currencies.json");
 		this.latestURL = baseURL.copy("latest.json");
@@ -111,6 +113,16 @@ public final class OERClient {
 	 */
 	public OERClient(HttpGETCache cache, String oerUrl, int connectTimeout, int readTimeout, PrintWriter debugWriter, ErrorHandler errorHandler) {
 		this(cache, oerUrl, connectTimeout, readTimeout, debugWriter, errorHandler, DEFAULT_API_KEY);
+	}
+	
+	/**
+	 * Set the API key
+	 * @param apiKey API key
+	 */
+	public void setApiKey(String apiKey) {
+		this.baseURL = restClient.buildURL(baseURLString).addParameter("API_KEY", apiKey);
+		this.currenciesURL = baseURL.copy("currencies.json");
+		this.latestURL = baseURL.copy("latest.json");		
 	}
 
 	/**
