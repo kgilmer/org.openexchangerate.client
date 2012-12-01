@@ -735,7 +735,7 @@ public class RestClient {
 		
 		validateArguments(method, url);		
 		
-		String httpUrl = url.toLowerCase();
+		String httpUrl = url;
 		if (!httpUrl.startsWith("http://") && !httpUrl.startsWith("https://"))
 			httpUrl = "http://" + url;
 		
